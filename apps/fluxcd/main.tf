@@ -52,6 +52,7 @@ data "flux_install" "main" {
 }
 
 resource "kubernetes_namespace" "flux_system" {
+  depends_on = [provider.kubernetes]
   metadata {
     name = "flux-system"
   }
