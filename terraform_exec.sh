@@ -39,5 +39,5 @@ if [ $APPLY == 1 ]; then
     echo "###############################"
     echo "## Executing terraform apply ##"
     echo "###############################"
-    terraform apply --auto-approve -var-file=envs/${ENV}.tfvars
+    terraform apply --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
 fi
