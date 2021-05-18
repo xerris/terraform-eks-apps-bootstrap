@@ -1,5 +1,5 @@
 module "flux"{
-    source = "apps/fluxcd"
+    source = "./apps/fluxcd"
     target_path = var.target_path
     github_owner = var.github_owner
     repository_name = var.repository_name
