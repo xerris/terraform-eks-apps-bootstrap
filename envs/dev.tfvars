@@ -1,2 +1,6 @@
 env = "dev"
 region = "us-east-1"
+target_path = "apps"
+github_owner = "xerris"
+repository_name = "terraform-eks-apps-bootstrap"
+branch= "main"

@@ -33,7 +33,7 @@ terraform init \
 #-backend-config="session_name=${ENV}-omni-dataapps"
 
 terraform validate
-terraform plan -var-file=envs/${ENV}.tfvars
+terraform plan -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
 
 if [ $APPLY == 1 ]; then
     echo "###############################"

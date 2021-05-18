@@ -13,7 +13,7 @@ anchors:
     run:
       name: Deploy Kuberntes Apps
       command: |
-        bash ./terraform_exec.sh 1
+        bash ./terraform_exec.sh 1 $FLUX_TOKEN
 
   install-dependencies: &install-dependencies
     run:
