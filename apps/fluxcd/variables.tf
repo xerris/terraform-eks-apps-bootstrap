@@ -12,3 +12,7 @@ variable "flux_token" {}
 variable "branch" {
   default = "main"
 }
+
+variable "bucket"{}
+variable "key" {}
+variable "region"{}
