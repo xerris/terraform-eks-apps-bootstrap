@@ -12,11 +12,21 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = ">= 2.0.2"
     }
+    helm = {
+      source = "hashicorp/helm"
+      version = "2.1.2"
+    }
   }
 }
 
 provider "kubernetes" {
   config_path = "~/.kube/config"
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
 }
 
 resource "kubernetes_namespace" "prometheus" {
