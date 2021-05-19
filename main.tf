@@ -10,3 +10,8 @@ module "flux"{
     region =  var.region
 
 }
+
+
+module "prometheus-operator"{
+    source = "./apps/prometheus-operator"
+}
