@@ -51,6 +51,10 @@ workflows:
     jobs:
       - deployInfra:
           context: ISENGARD-DEV
+          filters:
+            branches:
+              only:
+                - dev
 
   devDestroy:
     jobs:
