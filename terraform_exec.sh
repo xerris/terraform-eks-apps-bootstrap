@@ -20,7 +20,7 @@ AWS_REGION="${AWS_REGION:-us-east-1}"
 APPLY=${1:-0} #If set terraform will force apply changes
 commit_hash=`git rev-parse --short HEAD`
 build_number="${BITBUCKET_BUILD_NUMBER:=local}"
-export TF_LOG=DEBUG
+#export TF_LOG=DEBUG
 export TF_VAR_commit_hash="${commit_hash}"
 export TF_VAR_build_number="${build_number}"
 pip install --upgrade awscli
