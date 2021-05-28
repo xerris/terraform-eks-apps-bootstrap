@@ -23,7 +23,7 @@ build_number="${BITBUCKET_BUILD_NUMBER:=local}"
 #export TF_LOG=TRACE
 export TF_VAR_commit_hash="${commit_hash}"
 export TF_VAR_build_number="${build_number}"
-#pip install --upgrade awscli
+pip install --upgrade awscli
 aws eks update-kubeconfig --region $AWS_REGION --name project_eks_cluster-$ENV --kubeconfig "~/.kube/config"
 terraform init \
 -backend-config="bucket=project-terraform-state-${ENV}" \
