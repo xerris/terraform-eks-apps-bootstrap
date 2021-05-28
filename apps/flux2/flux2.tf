@@ -30,7 +30,7 @@ locals {
       target_path              = var.target_path
       default_network_policy   = true
       version                  = "v0.9.0"
-      github_url               = "https://github.com/${var.github_owner}/${var.repository_name}"
+      github_url               = "ssh://git@github.com/${var.github_owner}/${var.repository_name}"
       create_github_repository = false
       github_token             = var.flux_token
       repository               = var.repository_name
