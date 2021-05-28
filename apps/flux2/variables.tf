@@ -25,5 +25,5 @@ variable "flux2" {
 variable "labels_prefix" {
   description = "Custom label prefix used for network policy namespace matching"
   type        = string
-  default     = "project_eks"
+  default     = "project.eks"
 }
