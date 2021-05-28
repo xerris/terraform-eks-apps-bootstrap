@@ -35,6 +35,8 @@ terraform init \
 
 terraform validate
 terraform plan -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
+export GITHUN_TOKEN=$2
+export GITHUB_ORGANIZATION=xerris
 
 if [ $APPLY == 2 ]; then
     echo "###############################"
