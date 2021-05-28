@@ -16,3 +16,8 @@ variable "branch" {
 variable "bucket"{}
 variable "key" {}
 variable "region"{}
+variable "flux2" {
+  description = "Customize Flux chart, see `flux2.tf` for supported values"
+  type        = any
+  default     = {}
+}
