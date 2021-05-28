@@ -177,6 +177,7 @@ resource "github_repository_deploy_key" "main" {
   repository = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
   key        = tls_private_key.identity[0].public_key_openssh
   read_only  = !local.flux2["auto_image_update"]
+  depends_on = [ tls_private_key.identity ]
 }
 
 resource "github_repository_file" "install" {
