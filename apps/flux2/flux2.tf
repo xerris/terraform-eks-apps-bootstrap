@@ -1,13 +1,13 @@
 terraform {
   required_providers {
-    helm       = "~> 2.0"
+    helm       = "~> 3.0"
     flux = {
       source  = "fluxcd/flux"
-      version = "0.1.6"
+      version = "0.2.0"
     }
     kubectl = {
       source  = "gavinbunney/kubectl"
-      version = ">= 1.10.0"
+      version = "1.10.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -33,7 +33,7 @@ locals {
       namespace                = "flux-system"
       target_path              = var.target_path
       default_network_policy   = true
-      version                  = "v0.9.0"
+      version                  = "v0.14.2"
       github_url               = "ssh://git@github.com/${var.github_owner}/${var.repository_name}"
       create_github_repository = false
       github_token             = var.flux_token
@@ -81,12 +81,6 @@ resource "kubernetes_namespace" "flux2" {
       metadata[0].labels,
     ]
   }
-}
-
-resource "tls_private_key" "identity" {
-  count     = local.flux2["enabled"] ? 1 : 0
-  algorithm = "RSA"
-  rsa_bits  = 4096
 }
 
 data "flux_install" "main" {
@@ -149,10 +143,14 @@ resource "kubernetes_secret" "main" {
   }
 
   data = {
-    "identity.pub" = tls_private_key.identity[0].public_key_pem
-    identity       = tls_private_key.identity[0].private_key_pem
-    known_hosts    = join("\n", local.flux2["known_hosts"])
+    username = "andrestorresGL"
+    password = var.flux_token
   }
+  #data = {
+  #  "identity.pub" = tls_private_key.identity[0].public_key_pem
+  #  identity       = tls_private_key.identity[0].private_key_pem
+  #  known_hosts    = join("\n", local.flux2["known_hosts"])
+  #}
 }
 
 # GitHub
@@ -174,16 +172,16 @@ resource "github_branch_default" "main" {
   branch     = local.flux2["branch"]
 }
 
-resource "github_repository_deploy_key" "main" {
-  #count      = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
-  #title      = "flux-${local.flux2["create_github_repository"] ? github_repository.main[0].name : local.flux2["repository"]}-${local.flux2["branch"]}"
-  title = "flux-${local.flux2["repository"]}-${local.flux2["branch"]}"
-  #repository = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
-  repository = data.github_repository.main[0].full_name
-  key        = tls_private_key.identity[0].public_key_openssh
-  read_only  = local.flux2["auto_image_update"]
-  depends_on = [ tls_private_key.identity, data.github_repository.main ]
-}
+#resource "github_repository_deploy_key" "main" {
+#  #count      = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
+#  #title      = "flux-${local.flux2["create_github_repository"] ? github_repository.main[0].name : local.flux2["repository"]}-${local.flux2["branch"]}"
+#  title = "flux-${local.flux2["repository"]}-${local.flux2["branch"]}"
+#  #repository = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
+#  repository = data.github_repository.main[0].full_name
+#  key        = tls_private_key.identity[0].public_key_openssh
+#  read_only  = local.flux2["auto_image_update"]
+#  depends_on = [ tls_private_key.identity, data.github_repository.main ]
+#}
 
 output "data_github"{
   value = data.github_repository.main[0]
