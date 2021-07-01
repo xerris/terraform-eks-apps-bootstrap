@@ -23,6 +23,10 @@ module "flux2"{
 
 }
 
-module "prometheus-operator"{
-    source = "./apps/prometheus-operator"
+#module "prometheus-operator"{
+#    source = "./apps/prometheus-operator"
+#}
+
+output "data_github"{
+  value = module.flux2.data_github
 }

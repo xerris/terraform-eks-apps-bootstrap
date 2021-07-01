@@ -20,6 +20,10 @@ provider "kubernetes" {
   config_path = "~/.kube/config"
 }
 
+provider "github" {
+  token = var.flux_token
+}
+
 locals {
   labels_prefix            = var.labels_prefix
   flux2 = merge(
@@ -43,8 +47,7 @@ locals {
       auto_image_update        = false
 
       known_hosts = [
-        "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==",
-        "gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9"
+        "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
       ]
     },
     var.flux2
@@ -162,7 +165,7 @@ resource "github_repository" "main" {
 
 data "github_repository" "main" {
   count = local.flux2["enabled"] && !local.flux2["create_github_repository"] && (local.flux2["provider"] == "github") ? 1 : 0
-  name  = local.flux2["repository"]
+  full_name  = "${var.github_owner}/${var.repository_name}"
 }
 
 resource "github_branch_default" "main" {
@@ -172,40 +175,46 @@ resource "github_branch_default" "main" {
 }
 
 resource "github_repository_deploy_key" "main" {
-  count      = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
-  title      = "flux-${local.flux2["create_github_repository"] ? github_repository.main[0].name : local.flux2["repository"]}-${local.flux2["branch"]}"
-  repository = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
+  #count      = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
+  #title      = "flux-${local.flux2["create_github_repository"] ? github_repository.main[0].name : local.flux2["repository"]}-${local.flux2["branch"]}"
+  title = "flux-${local.flux2["repository"]}-${local.flux2["branch"]}"
+  #repository = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
+  repository = data.github_repository.main[0].full_name
   key        = tls_private_key.identity[0].public_key_openssh
   read_only  = local.flux2["auto_image_update"]
-  depends_on = [ tls_private_key.identity ]
+  depends_on = [ tls_private_key.identity, data.github_repository.main ]
 }
 
-resource "github_repository_file" "install" {
-  count               = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
-  repository          = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
-  file                = data.flux_install.main[0].path
-  content             = data.flux_install.main[0].content
-  branch              = local.flux2["branch"]
-  overwrite_on_create = true
+output "data_github"{
+  value = data.github_repository.main[0]
 }
 
-resource "github_repository_file" "sync" {
-  count               = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
-  repository          = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
-  file                = data.flux_sync.main[0].path
-  content             = data.flux_sync.main[0].content
-  branch              = local.flux2["branch"]
-  overwrite_on_create = true
-}
+#resource "github_repository_file" "install" {
+#  count               = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
+#  repository          = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
+#  file                = data.flux_install.main[0].path
+#  content             = data.flux_install.main[0].content
+#  branch              = local.flux2["branch"]
+#  overwrite_on_create = true
+#}
 
-resource "github_repository_file" "kustomize" {
-  count               = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
-  repository          = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
-  file                = data.flux_sync.main[0].kustomize_path
-  content             = data.flux_sync.main[0].kustomize_content
-  branch              = local.flux2["branch"]
-  overwrite_on_create = true
-}
+#resource "github_repository_file" "sync" {
+#  count               = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
+#  repository          = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
+#  file                = data.flux_sync.main[0].path
+#  content             = data.flux_sync.main[0].content
+#  branch              = local.flux2["branch"]
+#  overwrite_on_create = true
+#}
+
+#resource "github_repository_file" "kustomize" {
+#  count               = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
+#  repository          = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
+#  file                = data.flux_sync.main[0].kustomize_path
+#  content             = data.flux_sync.main[0].kustomize_content
+#  branch              = local.flux2["branch"]
+#  overwrite_on_create = true
+#}
 
 resource "kubernetes_network_policy" "flux2_allow_monitoring" {
   count = local.flux2["enabled"] && local.flux2["default_network_policy"] ? 1 : 0
