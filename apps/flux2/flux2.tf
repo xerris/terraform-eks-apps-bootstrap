@@ -146,11 +146,7 @@ resource "kubernetes_secret" "main" {
     username = "andrestorresGL"
     password = var.flux_token
   }
-  #data = {
-  #  "identity.pub" = tls_private_key.identity[0].public_key_pem
-  #  identity       = tls_private_key.identity[0].private_key_pem
-  #  known_hosts    = join("\n", local.flux2["known_hosts"])
-  #}
+
 }
 
 # GitHub
@@ -172,47 +168,11 @@ resource "github_branch_default" "main" {
   branch     = local.flux2["branch"]
 }
 
-#resource "github_repository_deploy_key" "main" {
-#  #count      = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
-#  #title      = "flux-${local.flux2["create_github_repository"] ? github_repository.main[0].name : local.flux2["repository"]}-${local.flux2["branch"]}"
-#  title = "flux-${local.flux2["repository"]}-${local.flux2["branch"]}"
-#  #repository = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
-#  repository = data.github_repository.main[0].full_name
-#  key        = tls_private_key.identity[0].public_key_openssh
-#  read_only  = local.flux2["auto_image_update"]
-#  depends_on = [ tls_private_key.identity, data.github_repository.main ]
-#}
+
 
 output "data_github"{
   value = data.github_repository.main[0]
 }
-
-#resource "github_repository_file" "install" {
-#  count               = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
-#  repository          = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
-#  file                = data.flux_install.main[0].path
-#  content             = data.flux_install.main[0].content
-#  branch              = local.flux2["branch"]
-#  overwrite_on_create = true
-#}
-
-#resource "github_repository_file" "sync" {
-#  count               = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
-#  repository          = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
-#  file                = data.flux_sync.main[0].path
-#  content             = data.flux_sync.main[0].content
-#  branch              = local.flux2["branch"]
-#  overwrite_on_create = true
-#}
-
-#resource "github_repository_file" "kustomize" {
-#  count               = local.flux2["enabled"] && (local.flux2["provider"] == "github") ? 1 : 0
-#  repository          = local.flux2["create_github_repository"] ? github_repository.main[0].name : data.github_repository.main[0].name
-#  file                = data.flux_sync.main[0].kustomize_path
-#  content             = data.flux_sync.main[0].kustomize_content
-#  branch              = local.flux2["branch"]
-#  overwrite_on_create = true
-#}
 
 resource "kubernetes_network_policy" "flux2_allow_monitoring" {
   count = local.flux2["enabled"] && local.flux2["default_network_policy"] ? 1 : 0
