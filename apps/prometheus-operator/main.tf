@@ -2,7 +2,7 @@ terraform {
   required_providers {
     flux = {
       source  = "fluxcd/flux"
-      version = "0.1.6"
+      version = "0.2.0"
     }
     kubectl = {
       source  = "gavinbunney/kubectl"
@@ -14,7 +14,7 @@ terraform {
     }
     helm = {
       source = "hashicorp/helm"
-      version = "2.1.2"
+      version = "2.2.0"
     }
   }
 }

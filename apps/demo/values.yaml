@@ -1,0 +1,18 @@
+namespace: "2048-game-dev"
+app: "2048"
+port: 80
+
+service:
+  name: "service-2048"
+
+
+  targetPort: 80
+  protocol: TCP
+  type: NodePort
+
+
+deployment:
+  name: "2048-deployment"
+  replicas: 2
+  image: alexwhen/docker-2048
+  imagePullPolicy: Always

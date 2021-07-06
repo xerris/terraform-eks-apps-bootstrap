@@ -1,6 +1,6 @@
 env = "dev"
 region = "us-east-1"
-target_path = "apps/flux2"
+target_path = "apps/demo"
 github_owner = "xerris"
 repository_name = "terraform-eks-apps-bootstrap"
 branch= "dev"
