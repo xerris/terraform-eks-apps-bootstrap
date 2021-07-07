@@ -27,3 +27,18 @@ variable "labels_prefix" {
   type        = string
   default     = "project.eks"
 }
+
+variable "repo_url" {
+}
+
+variable "repo_provider" {
+
+}
+
+variable "default_components" {
+  type = list
+}
+
+variable "components" {
+  type = list
+}

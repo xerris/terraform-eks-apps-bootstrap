@@ -37,21 +37,16 @@ locals {
       target_path              = var.target_path
       default_network_policy   = true
       version                  = "v0.14.2"
-      github_url               = "https://github.com/${var.github_owner}/${var.repository_name}"
+      repo_url               = var.repo_url
       create_github_repository = false
-      github_token             = var.flux_token
       repository               = var.repository_name
       repository_visibility    = "public"
       branch                   = var.branch
       flux_sync_branch         = ""
-      default_components       = ["source-controller", "kustomize-controller", "helm-controller", "notification-controller"]
-      components               = []
-      provider                 = "github"
+      default_components       = var.default_components
+      components               = var.components
+      provider                 = var.repo_provider
       auto_image_update        = false
-
-      known_hosts = [
-        "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
-      ]
     },
     var.flux2
   )
@@ -113,7 +108,7 @@ resource "kubectl_manifest" "apply" {
 data "flux_sync" "main" {
   count       = local.flux2["enabled"] ? 1 : 0
   target_path = local.flux2["target_path"]
-  url         = local.flux2["github_url"]
+  url         = local.flux2["repo_url"]
   branch      = local.flux2["flux_sync_branch"] != "" ? local.flux2["flux_sync_branch"] : local.flux2["branch"]
   namespace   = local.flux2["namespace"]
 }
