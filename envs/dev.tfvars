@@ -5,5 +5,5 @@ github_owner = "xerris"
 repository_name = "terraform-eks-apps-bootstrap"
 branch= "dev"
 repo_provider =  "github"
-default_components = ["source-controller", "notification-controller"]
+default_components = ["source-controller", "kustomize-controller", "notification-controller"]
 components = ["helm-controller"]
