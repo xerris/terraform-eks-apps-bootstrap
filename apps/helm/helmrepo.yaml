@@ -1,8 +1,17 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: HelmRepository
+kind: HelmChart
 metadata:
-  name: service-2048
+  finalizers:
+  - finalizers.fluxcd.io
+  generation: 1
+  name: demo-helm-chart
   namespace: flux-system
 spec:
+  spec:
+  chart: ./apps/helm/demo
+  sourceRef:
+    name: flux-system
+    kind: GitRepository
   interval: 1m
-  url: https://github.com/xerris/terraform-eks-apps-bootstrap
+  valuesFiles:
+    - ./apps/helm/demo/values.yaml

@@ -1,5 +1,5 @@
 namespace: "2048-game-dev"
-app: "2048"
+app: "2048-app"
 port: 80
 
 service:
