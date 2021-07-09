@@ -1,6 +1,6 @@
 module "flux2"{
     source = "./apps/flux2"
-    target_path = var.target_path
+    target_path = "${var.target_path}/${var.env}"
     repository_name = "terraform-eks-apps-bootstrap"
     repo_url = "https://github.com/${var.github_owner}/${var.repository_name}"
     branch = var.branch
