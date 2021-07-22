@@ -25,9 +25,9 @@ export TF_VAR_commit_hash="${commit_hash}"
 export TF_VAR_build_number="${build_number}"
 aws eks update-kubeconfig --region $AWS_REGION --name cc_eks_cluster-$ENV --kubeconfig "~/.kube/config"
 terraform init \
--backend-config="bucket=project-terraform-state-${ENV}" \
--backend-config="key=${ENV}/project-eks-apps-bootstrap.tfstate" \
--backend-config="dynamodb_table=${ENV}-project-terraform-state-lock-dynamo" \
+-backend-config="bucket=cc-terraform-state-${ENV}" \
+-backend-config="key=${ENV}/cc-eks-apps-bootstrap.tfstate" \
+-backend-config="dynamodb_table=${ENV}-cc-terraform-state-lock-dynamo" \
 -backend-config="region=${AWS_REGION}"
 #-backend-config="role_arn=arn:aws:iam::${ACCOUNT_ID}:role/aldo-jenkins" \
 #-backend-config="session_name=${ENV}-omni-dataapps"
