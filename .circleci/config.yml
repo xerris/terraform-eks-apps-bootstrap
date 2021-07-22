@@ -30,7 +30,8 @@ anchors:
 
 jobs:
   deployInfra:
-    executor: machine
+    machine:
+      image: ubuntu-2004:202010-01
     steps:
       - checkout
       - *install-dependencies
@@ -38,7 +39,8 @@ jobs:
       - *deploy-infra
 
   destroyInfra:
-    executor: machine
+    machine:
+      image: ubuntu-2004:202010-01
     steps:
       - checkout
       - *install-dependencies
