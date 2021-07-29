@@ -15,9 +15,14 @@ module "flux2"{
 }
 
 module "prometheus-operator"{
+    #condition to install Prometheus on cluster or use the AWS Service
     source = "./apps/prometheus-operator"
 }
 
 output "data_github"{
   value = module.flux2.data_github
 }
+
+#Thanos
+#HPA Custom Metrics
+#Image Pull Secret Patcher
