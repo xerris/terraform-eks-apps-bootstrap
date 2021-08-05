@@ -57,6 +57,7 @@ workflows:
             branches:
               only:
                 - dev
+                - XDP-*
 
   devDestroy:
     jobs:

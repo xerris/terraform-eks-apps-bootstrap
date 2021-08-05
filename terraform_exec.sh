@@ -8,7 +8,7 @@ echo "## Starting Terraform script ##"
 echo "###############################"
 
 ENV="${ENV:-dev}"
-AWS_REGION="${AWS_REGION:-us-east-1}"
+AWS_REGION="${AWS_REGION:-us-east-2}"
 #echo "Configuring AWS Profiles"
 #aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile aldo-user
 #aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile aldo-user

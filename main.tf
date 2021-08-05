@@ -14,6 +14,10 @@ module "flux2"{
 
 }
 
+module "ambassador"{
+  source = "./apps/ambassador"
+}
+
 module "prometheus-operator"{
     #condition to install Prometheus on cluster or use the AWS Service
     source = "./apps/prometheus-operator"

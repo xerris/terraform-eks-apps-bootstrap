@@ -1,0 +1,22 @@
+namespace:
+  name: ambassador
+ambassadorConfig: ""
+enableAES: false
+adminService:
+   create: true
+env:
+  AMBASSADOR_ID: "ambassador-elb"
+image:
+  repository: quay.io/datawire/ambassador
+  tag: 1.4.3
+service:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "stack=testing,purpose=text,service-name=dev-elb"
+    #service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    #service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:xx-xxxx-x:xxxxxxxxx:xxxxxxx/xxxxx-xxxx-xxxx-xxxx-xxxxxxxxx
+metrics:
+  serviceMonitor:
+    enabled: "true"
+daemonSet: "true"
