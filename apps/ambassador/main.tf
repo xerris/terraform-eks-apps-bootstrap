@@ -30,7 +30,7 @@ provider "helm" {
 
 ####### CRD manifest Definitions ############
 
-resource "kubernetes_manifest" "ambasador_authservice_crd"{
+resource "kubernetes_manifest" "ambassador_authservice_crd"{
   manifest = {
   "apiVersion" = "apiextensions.k8s.io/v1beta1"
   "kind" = "CustomResourceDefinition"
@@ -2740,7 +2740,7 @@ resource "kubernetes_manifest" "projectrevisions_crd"{
 resource "kubernetes_namespace" "ambassador" {
   metadata {
     annotations = {
-      name = "ambasador"
+      name = "ambassador"
     }
     labels = {
       namespace = "ambassador"
@@ -2751,7 +2751,7 @@ resource "kubernetes_namespace" "ambassador" {
 }
 
 resource "kubernetes_manifest" "service_account_ambassador"{
-  depends_on = [kubernetes_namespace.ambasador]
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "v1"
   "kind" = "ServiceAccount"
@@ -2767,7 +2767,7 @@ resource "kubernetes_manifest" "service_account_ambassador"{
 }
 
 resource "kubernetes_manifest" "ambassador_cluster_role"{
-  depends_on = [kubernetes_namespace.ambasador]
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRole"
@@ -2793,7 +2793,7 @@ resource "kubernetes_manifest" "ambassador_cluster_role"{
 
 
 resource "kubernetes_manifest" "cluster_role_binding_ambassador"{
-  depends_on = [kubernetes_namespace.ambasador, kubernertes_manifest.ambassador_cluster_role, kubernertes_manifest.service_account_ambassador]
+  depends_on = [kubernetes_namespace.ambassador, kubernetes_manifest.ambassador_cluster_role, kubernetes_manifest.service_account_ambassador]
   manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRoleBinding"
@@ -2820,7 +2820,7 @@ resource "kubernetes_manifest" "cluster_role_binding_ambassador"{
 }
 
 resource "kubernetes_manifest" "cluster_role_ambassador_projects"{
-  depends_on = [kubernetes_namespace.ambasador]
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRole"
@@ -2910,7 +2910,7 @@ resource "kubernetes_manifest" "cluster_role_ambassador_projects"{
 }
 
 resource "kubernetes_manifest" "cluster_role_binding_ambassador_projects"{
-  depends_on = [kubernetes_namespace.ambasador,kubernertes_manifest.cluster_role_ambassador_projects, kubernertes_manifest.service_account_ambassador]
+  depends_on = [kubernetes_namespace.ambassador,kubernetes_manifest.cluster_role_ambassador_projects, kubernetes_manifest.service_account_ambassador]
   manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRoleBinding"
@@ -2937,7 +2937,7 @@ resource "kubernetes_manifest" "cluster_role_binding_ambassador_projects"{
 }
 
 resource "kubernetes_manifest" "ambassador_redis_service"{
-  depends_on = [kubernetes_namespace.ambasador]
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "v1"
   "kind" = "Service"
@@ -2975,7 +2975,7 @@ resource "kubernetes_manifest" "ambassador_redis_service"{
 }
 
 resource "kubernetes_manifest" "ambassador_redis_deployment"{
-  depends_on = [kubernetes_namespace.ambasador]
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "apps/v1"
   "kind" = "Deployment"
@@ -3018,7 +3018,7 @@ resource "kubernetes_manifest" "ambassador_redis_deployment"{
 }
 
 resource "kubernetes_manifest" "ambassador_edge_stack_ratelimit"{
-  depends_on = [kubernetes_namespace.ambasador, kubernetes_manifest.ratelimitservices_crd]
+  depends_on = [kubernetes_namespace.ambassador, kubernetes_manifest.ratelimitservices_crd]
   manifest = {
   "apiVersion" = "getambassador.io/v2"
   "kind" = "RateLimitService"
@@ -3036,8 +3036,8 @@ resource "kubernetes_manifest" "ambassador_edge_stack_ratelimit"{
 
 }
 
-resource "kubernertes_manifest" "ambassador_edge_stack_auth"{
-  depends_on = [kubernetes_namespace.ambasador, kubernetes_manifest.ambasador_authservice_crd]
+resource "kubernetes_manifest" "ambassador_edge_stack_auth"{
+  depends_on = [kubernetes_namespace.ambassador, kubernetes_manifest.ambassador_authservice_crd]
   manifest = {
   "apiVersion" = "getambassador.io/v2"
   "kind" = "AuthService"
@@ -3060,8 +3060,8 @@ resource "kubernertes_manifest" "ambassador_edge_stack_auth"{
 
 }
 
-resource "kubernertes_manifest" "ambassador_edge_stack_secret"{
-  depends_on = [kubernetes_namespace.ambasador]
+resource "kubernetes_manifest" "ambassador_edge_stack_secret"{
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "v1"
   "data" = {
@@ -3078,7 +3078,7 @@ resource "kubernertes_manifest" "ambassador_edge_stack_secret"{
 }
 
 resource "kubernetes_manifest" "ambassador_devportal_map"{
-  depends_on = [kubernetes_namespace.ambasador, kubernetes_manifest.mappings_crd]
+  depends_on = [kubernetes_namespace.ambassador, kubernetes_manifest.mappings_crd]
   manifest = {
   "apiVersion" = "getambassador.io/v2"
   "kind" = "Mapping"
@@ -3099,7 +3099,7 @@ resource "kubernetes_manifest" "ambassador_devportal_map"{
 }
 
 resource "kubernetes_manifest" "ambassador_devportal_assets_map"{
-  depends_on = [kubernetes_namespace.ambasador, kubernetes_manifest.mappings_crd]
+  depends_on = [kubernetes_namespace.ambassador, kubernetes_manifest.mappings_crd]
   manifest = {
   "apiVersion" = "getambassador.io/v2"
   "kind" = "Mapping"
@@ -3130,7 +3130,7 @@ resource "kubernetes_manifest" "ambassador_devportal_assets_map"{
 }
 
 resource "kubernetes_manifest" "ambassador_devportal_api_map"{
-  depends_on = [kubernetes_namespace.ambasador, kubernetes_manifest.mappings_crd]
+  depends_on = [kubernetes_namespace.ambassador, kubernetes_manifest.mappings_crd]
   manifest = {
   "apiVersion" = "getambassador.io/v2"
   "kind" = "Mapping"
@@ -3151,7 +3151,7 @@ resource "kubernetes_manifest" "ambassador_devportal_api_map"{
 }
 
 resource "kubernetes_manifest" "ambassador_service"{
-  depends_on = [kubernetes_namespace.ambasador]
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "v1"
   "kind" = "Service"
@@ -3196,7 +3196,7 @@ resource "kubernetes_manifest" "ambassador_service"{
 
 
 resource "kubernetes_manifest" "ambassador_admin_service"{
-  depends_on = [kubernetes_namespace.ambasador]
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "v1"
   "kind" = "Service"
@@ -3222,15 +3222,15 @@ resource "kubernetes_manifest" "ambassador_admin_service"{
     "ports" = [
       {
         "name" = "ambassador-admin"
-        "port" = 8877
+        "port" = "8877"
         "protocol" = "TCP"
         "targetPort" = "admin"
       },
       {
         "name" = "ambassador-snapshot"
-        "port" = 8005
+        "port" ="8005"
         "protocol" = "TCP"
-        "targetPort" = 8005
+        "targetPort" = "8005"
       },
     ]
     "selector" = {
@@ -3246,7 +3246,7 @@ resource "kubernetes_manifest" "ambassador_admin_service"{
 
 
 resource "kubernetes_manifest" "ambassador_crd_cluster_role"{
-  depends_on = [kubernetes_namespace.ambasador]
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRole"
@@ -3279,7 +3279,7 @@ resource "kubernetes_manifest" "ambassador_crd_cluster_role"{
 }
 
 resource "kubernetes_manifest" "ambassador_watch_cluster_role"{
-  depends_on = [kubernetes_namespace.ambasador]
+  depends_on = [kubernetes_namespace.ambassador]
   manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRole"
@@ -3466,7 +3466,7 @@ resource "kubernetes_manifest" "ambassador_watch_cluster_role"{
 }
 
 resource "kubernetes_manifest" "ambassador_deployment"{
-    depends_on = [ kubernetes_namespace.ambasador]
+    depends_on = [ kubernetes_namespace.ambassador]
     manifest = {
   "apiVersion" = "apps/v1"
   "kind" = "Deployment"
@@ -3511,7 +3511,7 @@ resource "kubernetes_manifest" "ambassador_deployment"{
                   }
                   "topologyKey" = "kubernetes.io/hostname"
                 }
-                "weight" = 100
+                "weight" = "100"
               },
             ]
           }
@@ -3559,37 +3559,37 @@ resource "kubernetes_manifest" "ambassador_deployment"{
             "image" = "docker.io/datawire/aes:1.13.9"
             "imagePullPolicy" = "IfNotPresent"
             "livenessProbe" = {
-              "failureThreshold" = 3
+              "failureThreshold" = "3"
               "httpGet" = {
                 "path" = "/ambassador/v0/check_alive"
                 "port" = "admin"
               }
-              "initialDelaySeconds" = 30
-              "periodSeconds" = 3
+              "initialDelaySeconds" = "30"
+              "periodSeconds" = "3"
             }
             "name" = "aes"
             "ports" = [
               {
-                "containerPort" = 8080
+                "containerPort" = "8080"
                 "name" = "http"
               },
               {
-                "containerPort" = 8443
+                "containerPort" = "8443"
                 "name" = "https"
               },
               {
-                "containerPort" = 8877
+                "containerPort" = "8877"
                 "name" = "admin"
               },
             ]
             "readinessProbe" = {
-              "failureThreshold" = 3
+              "failureThreshold" = "3"
               "httpGet" = {
                 "path" = "/ambassador/v0/check_ready"
                 "port" = "admin"
               }
-              "initialDelaySeconds" = 30
-              "periodSeconds" = 3
+              "initialDelaySeconds" = "30"
+              "periodSeconds" = "3"
             }
             "resources" = {
               "limits" = {
@@ -3623,7 +3623,7 @@ resource "kubernetes_manifest" "ambassador_deployment"{
         "imagePullSecrets" = []
         "restartPolicy" = "Always"
         "securityContext" = {
-          "runAsUser" = 8888
+          "runAsUser" = "8888"
         }
         "serviceAccountName" = "ambassador"
         "terminationGracePeriodSeconds" = 0
@@ -3658,7 +3658,7 @@ resource "kubernetes_manifest" "ambassador_deployment"{
 
 
 resource "kubernetes_manifest" "ambassador_agent_cluster_role_binding"{
-    depends_on = [ kubernetes_namespace.ambasador]
+    depends_on = [ kubernetes_namespace.ambassador]
     manifest =  {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRoleBinding"
@@ -3685,7 +3685,7 @@ resource "kubernetes_manifest" "ambassador_agent_cluster_role_binding"{
 }
 
 resource "kubernetes_manifest" "ambassador_agent_cluster_role"{
-    depends_on = [ kubernetes_namespace.ambasador]
+    depends_on = [ kubernetes_namespace.ambassador]
     manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRole"
@@ -3709,7 +3709,7 @@ resource "kubernetes_manifest" "ambassador_agent_cluster_role"{
 }
 
 resource "kubernetes_manifest" "ambassador_agent_pods_cluster_role"{
-    depends_on = [ kubernetes_namespace.ambasador]
+    depends_on = [ kubernetes_namespace.ambassador]
     manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRole"
@@ -3741,7 +3741,7 @@ resource "kubernetes_manifest" "ambassador_agent_pods_cluster_role"{
 }
 
 resource "kubernetes_manifest" "ambassador_agent_rollouts_cluster_role"{
-    depends_on = [ kubernetes_namespace.ambasador]
+    depends_on = [ kubernetes_namespace.ambassador]
     manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRole"
@@ -3773,7 +3773,7 @@ resource "kubernetes_manifest" "ambassador_agent_rollouts_cluster_role"{
 }
 
 resource "kubernetes_manifest" "ambassador_agent_applications_cluster_role"{
-    depends_on = [ kubernetes_namespace.ambasador]
+    depends_on = [ kubernetes_namespace.ambassador]
     manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "ClusterRole"
@@ -3804,7 +3804,7 @@ resource "kubernetes_manifest" "ambassador_agent_applications_cluster_role"{
 }
 
 resource "kubernetes_manifest" "ambassador_agent_config_role"{
-    depends_on = [ kubernetes_namespace.ambasador]
+    depends_on = [ kubernetes_namespace.ambassador]
     manifest =  {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "Role"
@@ -3835,7 +3835,7 @@ resource "kubernetes_manifest" "ambassador_agent_config_role"{
 }
 
 resource "kubernetes_manifest" "ambassador_agent_service_account"{
-    depends_on = [ kubernetes_namespace.ambasador]
+    depends_on = [ kubernetes_namespace.ambassador]
     manifest = {
   "apiVersion" = "v1"
   "kind" = "ServiceAccount"
@@ -3852,7 +3852,7 @@ resource "kubernetes_manifest" "ambassador_agent_service_account"{
 
 
 resource "kubernetes_manifest" "ambassador_agent_config_role_binding"{
-    depends_on = [ kubernetes_namespace.ambasador, kubernetes_manifest.ambassador_agent_service_account, kubernetes_manifest.ambassador_agent_config_role ]
+    depends_on = [ kubernetes_namespace.ambassador, kubernetes_manifest.ambassador_agent_service_account, kubernetes_manifest.ambassador_agent_config_role ]
     manifest = {
   "apiVersion" = "rbac.authorization.k8s.io/v1"
   "kind" = "RoleBinding"
@@ -3880,7 +3880,7 @@ resource "kubernetes_manifest" "ambassador_agent_config_role_binding"{
 }
 
 resource "kubernetes_manifest" "ambassador_agent_deployment"{
-    depends_on = [ kubernetes_namespace.ambasador]
+    depends_on = [ kubernetes_namespace.ambassador]
     manifest = {
   "apiVersion" = "apps/v1"
   "kind" = "Deployment"
@@ -3893,7 +3893,7 @@ resource "kubernetes_manifest" "ambassador_agent_deployment"{
     "namespace" = "ambassador"
   }
   "spec" = {
-    "replicas" = 1
+    "replicas" = "1"
     "selector" = {
       "matchLabels" = {
         "app.kubernetes.io/instance" = "ambassador"
@@ -3949,7 +3949,7 @@ resource "kubernetes_manifest" "ambassador_agent_deployment"{
 }
 
 resource "kubernetes_manifest" "ambassador_host"{
-    depends_on = [ kubernetes_namespace.ambasador,kubernetes_manifest.hosts_crd]
+    depends_on = [ kubernetes_namespace.ambassador,kubernetes_manifest.hosts_crd]
     manifest = {
         "apiVersion" = "getambassador.io/v2"
         "kind" = "Host"
@@ -3977,7 +3977,7 @@ resource "kubernetes_manifest" "ambassador_host"{
 }
 
 resource "kubernetes_manifest" "ambassador_module"{
-    depends_on = [ kubernetes_namespace.ambasador, kubernetes_manifest.modules_crd]
+    depends_on = [ kubernetes_namespace.ambassador, kubernetes_manifest.modules_crd]
     manifest = {
         "apiVersion" = "getambassador.io/v2"
         "kind" = "Module"
