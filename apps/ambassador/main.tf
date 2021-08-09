@@ -510,7 +510,7 @@ resource "kubernetes_deployment" "ambassador_deployment"{
                   }
                   topology_key = "kubernetes.io/hostname"
                 }
-                weight = "100"
+                weight = 100
               }
           }
         }
@@ -537,7 +537,7 @@ resource "kubernetes_deployment" "ambassador_deployment"{
               }
             env {
                 name = "AMBASSADOR_DRAIN_TIME"
-                value = "600"
+                value = 600
               }
             env {
                 name = "AMBASSADOR_INTERNAL_URL"
@@ -549,7 +549,7 @@ resource "kubernetes_deployment" "ambassador_deployment"{
               }
             env {
                 name = "POLL_EVERY_SECS"
-                value = "60"
+                value = 60
               }
             image = "docker.io/datawire/aes:1.13.9"
             image_pull_policy = "IfNotPresent"
@@ -662,7 +662,7 @@ resource "kubernetes_service" "ambassador_admin_service"{
   spec {
     port {
       name = "ambassador-admin"
-      port = "8877"
+      port = 8877
       protocol = "TCP"
       target_port = "admin"
       }
