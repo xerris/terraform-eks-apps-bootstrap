@@ -442,6 +442,10 @@ resource "kubernetes_service" "ambassador_service"{
       "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled" = "true"
       "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = "http"
       "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags" = "stack=testing,purpose=text,service-name=dev-elb"
+      "service.beta.kubernetes.io/aws-load-balancer-access-log-enabled" = "true"
+      "service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval" = "60"
+      "service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name" = "c-terraform-state-dev"
+      "service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix" = "lb-logs/dev"
     }
     labels = {
       "app.kubernetes.io/component" = "ambassador-service"
