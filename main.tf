@@ -14,9 +14,15 @@ module "flux2"{
 
 }
 
-module "ambassador"{
+module "ambassador_crd_install"{
+  source = "./apps/ambassador/ambassador_crd"
+}
+
+
+module "ambassador_install"{
   source = "./apps/ambassador"
 }
+
 
 module "prometheus-operator"{
     #condition to install Prometheus on cluster or use the AWS Service

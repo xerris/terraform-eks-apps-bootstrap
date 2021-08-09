@@ -35,7 +35,7 @@ terraform init \
 terraform validate
 export GITHUB_TOKEN=$2
 export GITHUB_OWNER=xerris
-terraform plan -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
+#terraform plan -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
 
 if [ $APPLY == 2 ]; then
     echo "###############################"
@@ -49,5 +49,7 @@ if [ $APPLY == 1 ]; then
     echo "###############################"
     echo "## Executing terraform apply ##"
     echo "###############################"
+    terraform apply --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}" -target=module.ambassador_crd_install
+    sleep 10
     terraform apply --auto-approve -var-file=envs/${ENV}.tfvars -var="flux_token=${2}"
 fi
