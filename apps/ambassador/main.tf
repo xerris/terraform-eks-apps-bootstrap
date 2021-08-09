@@ -457,11 +457,13 @@ resource "kubernetes_service" "ambassador_service"{
     port {
         name = "http"
         port = 80
+        protocol = "TCP"
         target_port = 8080
       }
     port  {
         name = "https"
         port = 443
+        protocol = "TCP"
         target_port = 8443
       }
     type = "LoadBalancer"
