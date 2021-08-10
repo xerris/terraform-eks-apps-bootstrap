@@ -1,0 +1,86 @@
+2021-08-09T09:25:31.207-0600 [INFO]  Terraform version: 0.15.1
+2021-08-09T09:25:31.207-0600 [INFO]  Go runtime version: go1.16.2
+2021-08-09T09:25:31.207-0600 [INFO]  CLI args: []string{"/home/andres/.tfenv/versions/0.15.1/terraform", "apply", "--auto-approve", "-var-file=envs/dev.tfvars", "-var=flux_token=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", "-target=module.ambassador_install"}
+2021-08-09T09:25:31.207-0600 [TRACE] Stdout is a terminal of width 239
+2021-08-09T09:25:31.207-0600 [TRACE] Stderr is a terminal of width 239
+2021-08-09T09:25:31.207-0600 [TRACE] Stdin is a terminal
+2021-08-09T09:25:31.207-0600 [DEBUG] Attempting to open CLI config file: /home/andres/.terraformrc
+2021-08-09T09:25:31.207-0600 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2021-08-09T09:25:31.207-0600 [DEBUG] ignoring non-existing provider search directory terraform.d/plugins
+2021-08-09T09:25:31.207-0600 [DEBUG] ignoring non-existing provider search directory /home/andres/.terraform.d/plugins
+2021-08-09T09:25:31.207-0600 [DEBUG] ignoring non-existing provider search directory /home/andres/.local/share/terraform/plugins
+2021-08-09T09:25:31.207-0600 [DEBUG] ignoring non-existing provider search directory /usr/share/ubuntu/terraform/plugins
+2021-08-09T09:25:31.207-0600 [DEBUG] ignoring non-existing provider search directory /usr/local/share/terraform/plugins
+2021-08-09T09:25:31.207-0600 [DEBUG] ignoring non-existing provider search directory /usr/share/terraform/plugins
+2021-08-09T09:25:31.207-0600 [DEBUG] ignoring non-existing provider search directory /var/lib/snapd/desktop/terraform/plugins
+2021-08-09T09:25:31.207-0600 [INFO]  CLI command args: []string{"apply", "--auto-approve", "-var-file=envs/dev.tfvars", "-var=flux_token=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", "-target=module.ambassador_install"}
+2021-08-09T09:25:31.208-0600 [TRACE] Meta.Backend: built configuration for "s3" backend with hash value 893988343
+2021-08-09T09:25:31.209-0600 [TRACE] Preserving existing state lineage "d3d6e4ba-9fdc-4534-1dd2-b67fd0241a47"
+2021-08-09T09:25:31.209-0600 [TRACE] Preserving existing state lineage "d3d6e4ba-9fdc-4534-1dd2-b67fd0241a47"
+2021-08-09T09:25:31.211-0600 [TRACE] Meta.Backend: working directory was previously initialized for "s3" backend
+2021-08-09T09:25:31.211-0600 [TRACE] Meta.Backend: using already-initialized, unchanged "s3" backend configuration
+2021-08-09T09:25:31.213-0600 [INFO]  AWS Auth provider used: "SharedCredentialsProvider"
+2021-08-09T09:25:31.214-0600 [DEBUG] Trying to get account information via sts:GetCallerIdentity
+2021-08-09T09:25:31.673-0600 [TRACE] Meta.Backend: instantiated backend of type *s3.Backend
+2021-08-09T09:25:31.675-0600 [TRACE] providercache.fillMetaCache: scanning directory .terraform/providers
+2021-08-09T09:25:31.675-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/fluxcd/flux v0.2.0 for linux_amd64 at .terraform/providers/registry.terraform.io/fluxcd/flux/0.2.0/linux_amd64
+2021-08-09T09:25:31.675-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/gavinbunney/kubectl v1.10.0 for linux_amd64 at .terraform/providers/registry.terraform.io/gavinbunney/kubectl/1.10.0/linux_amd64
+2021-08-09T09:25:31.675-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/hashicorp/aws v3.40.0 for linux_amd64 at .terraform/providers/registry.terraform.io/hashicorp/aws/3.40.0/linux_amd64
+2021-08-09T09:25:31.675-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/hashicorp/aws v3.52.0 for linux_amd64 at .terraform/providers/registry.terraform.io/hashicorp/aws/3.52.0/linux_amd64
+2021-08-09T09:25:31.675-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/hashicorp/github v4.10.1 for linux_amd64 at .terraform/providers/registry.terraform.io/hashicorp/github/4.10.1/linux_amd64
+2021-08-09T09:25:31.675-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/hashicorp/github v4.13.0 for linux_amd64 at .terraform/providers/registry.terraform.io/hashicorp/github/4.13.0/linux_amd64
+2021-08-09T09:25:31.675-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/hashicorp/helm v2.2.0 for linux_amd64 at .terraform/providers/registry.terraform.io/hashicorp/helm/2.2.0/linux_amd64
+2021-08-09T09:25:31.676-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/hashicorp/kubernetes v2.2.0 for linux_amd64 at .terraform/providers/registry.terraform.io/hashicorp/kubernetes/2.2.0/linux_amd64
+2021-08-09T09:25:31.676-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/hashicorp/kubernetes v2.4.1 for linux_amd64 at .terraform/providers/registry.terraform.io/hashicorp/kubernetes/2.4.1/linux_amd64
+2021-08-09T09:25:31.676-0600 [TRACE] getproviders.SearchLocalDirectory: found registry.terraform.io/hashicorp/time v0.7.2 for linux_amd64 at .terraform/providers/registry.terraform.io/hashicorp/time/0.7.2/linux_amd64
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/hashicorp/kubernetes/2.2.0/linux_amd64 as a candidate package for registry.terraform.io/hashicorp/kubernetes 2.2.0
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/hashicorp/kubernetes/2.4.1/linux_amd64 as a candidate package for registry.terraform.io/hashicorp/kubernetes 2.4.1
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/hashicorp/time/0.7.2/linux_amd64 as a candidate package for registry.terraform.io/hashicorp/time 0.7.2
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/fluxcd/flux/0.2.0/linux_amd64 as a candidate package for registry.terraform.io/fluxcd/flux 0.2.0
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/gavinbunney/kubectl/1.10.0/linux_amd64 as a candidate package for registry.terraform.io/gavinbunney/kubectl 1.10.0
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/hashicorp/aws/3.40.0/linux_amd64 as a candidate package for registry.terraform.io/hashicorp/aws 3.40.0
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/hashicorp/aws/3.52.0/linux_amd64 as a candidate package for registry.terraform.io/hashicorp/aws 3.52.0
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/hashicorp/github/4.10.1/linux_amd64 as a candidate package for registry.terraform.io/hashicorp/github 4.10.1
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/hashicorp/github/4.13.0/linux_amd64 as a candidate package for registry.terraform.io/hashicorp/github 4.13.0
+2021-08-09T09:25:31.676-0600 [TRACE] providercache.fillMetaCache: including .terraform/providers/registry.terraform.io/hashicorp/helm/2.2.0/linux_amd64 as a candidate package for registry.terraform.io/hashicorp/helm 2.2.0
+2021-08-09T09:25:31.752-0600 [TRACE] providercache.fillMetaCache: using cached result from previous scan of .terraform/providers
+2021-08-09T09:25:31.836-0600 [TRACE] providercache.fillMetaCache: using cached result from previous scan of .terraform/providers
+2021-08-09T09:25:31.858-0600 [TRACE] providercache.fillMetaCache: using cached result from previous scan of .terraform/providers
+2021-08-09T09:25:31.858-0600 [TRACE] providercache.fillMetaCache: using cached result from previous scan of .terraform/providers
+2021-08-09T09:25:31.894-0600 [TRACE] providercache.fillMetaCache: using cached result from previous scan of .terraform/providers
+2021-08-09T09:25:31.973-0600 [TRACE] providercache.fillMetaCache: using cached result from previous scan of .terraform/providers
+2021-08-09T09:25:32.280-0600 [TRACE] providercache.fillMetaCache: using cached result from previous scan of .terraform/providers
+2021-08-09T09:25:32.313-0600 [WARN]  Failed to determine selected providers: 1 error occurred:
+	* there is no package for registry.terraform.io/hashicorp/tls 3.1.0 cached in .terraform/providers
+2021-08-09T09:25:32.313-0600 [DEBUG] checking for provisioner in "."
+2021-08-09T09:25:32.313-0600 [DEBUG] checking for provisioner in "/home/andres/.tfenv/versions/0.15.1"
+2021-08-09T09:25:32.314-0600 [INFO]  Failed to read plugin lock file .terraform/plugins/linux_amd64/lock.json: open .terraform/plugins/linux_amd64/lock.json: no such file or directory
+2021-08-09T09:25:32.314-0600 [TRACE] Meta.Backend: backend *s3.Backend does not support operations, so wrapping it in a local backend
+2021-08-09T09:25:32.314-0600 [INFO]  backend/local: starting Apply operation
+2021-08-09T09:25:32.314-0600 [TRACE] backend/local: requesting state manager for workspace "default"
+2021-08-09T09:25:32.844-0600 [TRACE] backend/local: requesting state lock for workspace "default"
+2021-08-09T09:25:33.299-0600 [TRACE] backend/local: reading remote state for workspace "default"
+2021-08-09T09:25:35.022-0600 [TRACE] backend/local: retrieving local state snapshot for workspace "default"
+2021-08-09T09:25:35.022-0600 [TRACE] backend/local: building context for current working directory
+
+panic: runtime error: slice bounds out of range [:-8882]
+
+goroutine 81 [running]:
+github.com/hashicorp/terraform/command/format.appendSourceSnippets(0xc001bcfc50, 0xc0008a81e0, 0xc000398a50)
+	/home/circleci/project/project/command/format/diagnostic.go:243 +0xa70
+github.com/hashicorp/terraform/command/format.DiagnosticFromJSON(0xc0008a81e0, 0xc000398a50, 0xef, 0xc0008a81e0, 0xc000e447b0)
+	/home/circleci/project/project/command/format/diagnostic.go:77 +0x225
+github.com/hashicorp/terraform/command/format.Diagnostic(0x2c36f68, 0xc0020588c0, 0xc000e447b0, 0xc000398a50, 0xef, 0x6, 0x6)
+	/home/circleci/project/project/command/format/diagnostic.go:30 +0x65
+github.com/hashicorp/terraform/command/views.(*View).Diagnostics(0xc000896360, 0xc0016c47e0, 0x6, 0x6)
+	/home/circleci/project/project/command/views/view.go:91 +0x3da
+github.com/hashicorp/terraform/command/views.(*OperationHuman).Diagnostics(0xc000713a30, 0xc0016c47e0, 0x6, 0x6)
+	/home/circleci/project/project/command/views/operation.go:126 +0x4c
+github.com/hashicorp/terraform/backend.(*Operation).ReportResult(0xc0001a6f00, 0xc000894c00, 0xc0016c47e0, 0x6, 0x6)
+	/home/circleci/project/project/backend/backend.go:267 +0x135
+github.com/hashicorp/terraform/backend/local.(*Local).opApply(0xc0000395e0, 0x2c354b8, 0xc000894c40, 0x2c354b8, 0xc000894c80, 0xc0001a6f00, 0xc000894c00)
+	/home/circleci/project/project/backend/local/backend_apply.go:48 +0x129a
+github.com/hashicorp/terraform/backend/local.(*Local).Operation.func1(0xc0006ba150, 0xc0006ba160, 0xc0006ba170, 0xc0000395e0, 0xc0006ba140, 0x2c354b8, 0xc000894c40, 0x2c354b8, 0xc000894c80, 0xc0001a6f00, ...)
+	/home/circleci/project/project/backend/local/backend.go:321 +0xe8
+created by github.com/hashicorp/terraform/backend/local.(*Local).Operation
+	/home/circleci/project/project/backend/local/backend.go:315 +0x2f2
