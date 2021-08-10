@@ -439,13 +439,10 @@ resource "kubernetes_service" "ambassador_service"{
       #"a8r.io/owner" = "Ambassador Labs"
       #"a8r.io/repository" = "github.com/datawire/ambassador"
       #"a8r.io/support" = "https://www.getambassador.io/about-us/support/"
+      "service.beta.kubernetes.io/aws-load-balancer-type" = "alb"
       "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled" = "true"
       "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = "http"
       "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags" = "stack=dev,service-name=ambassador"
-    }
-    labels = {
-      "app.kubernetes.io/component" = "ambassador-service"
-      "product" = "aes"
     }
     name = "ambassador"
     namespace = "ambassador"
