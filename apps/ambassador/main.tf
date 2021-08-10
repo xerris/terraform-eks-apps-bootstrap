@@ -1231,8 +1231,8 @@ resource "kubernetes_manifest" "ambassador_module"{
         }
         "spec" = {
             "config" = {
-                "xff_num_trusted_hops" = "1"
-                "use_remote_address" = "false"
+                "xff_num_trusted_hops" = 1
+                "use_remote_address" = false
             }
         }
     }
