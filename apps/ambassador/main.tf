@@ -431,21 +431,17 @@ resource "kubernetes_service" "ambassador_service"{
   depends_on = [kubernetes_namespace.ambassador]
   metadata {
     annotations = {
-      "a8r.io/bugs" = "https://github.com/datawire/ambassador/issues"
-      "a8r.io/chat" = "http://a8r.io/Slack"
-      "a8r.io/dependencies" = "ambassador-redis.ambassador"
-      "a8r.io/description" = "The Ambassador Edge Stack goes beyond traditional API Gateways and Ingress Controllers with the advanced edge features needed to support developer self-service and full-cycle development."
-      "a8r.io/documentation" = "https://www.getambassador.io/docs/edge-stack/latest/"
-      "a8r.io/owner" = "Ambassador Labs"
-      "a8r.io/repository" = "github.com/datawire/ambassador"
-      "a8r.io/support" = "https://www.getambassador.io/about-us/support/"
+      #"a8r.io/bugs" = "https://github.com/datawire/ambassador/issues"
+      #"a8r.io/chat" = "http://a8r.io/Slack"
+      #"a8r.io/dependencies" = "ambassador-redis.ambassador"
+      #"a8r.io/description" = "The Ambassador Edge Stack goes beyond traditional API Gateways and Ingress Controllers with the advanced edge features needed to support developer self-service and full-cycle development."
+      #"a8r.io/documentation" = "https://www.getambassador.io/docs/edge-stack/latest/"
+      #"a8r.io/owner" = "Ambassador Labs"
+      #"a8r.io/repository" = "github.com/datawire/ambassador"
+      #"a8r.io/support" = "https://www.getambassador.io/about-us/support/"
       "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled" = "true"
       "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = "http"
       "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags" = "stack=dev,service-name=ambassador"
-      #"service.beta.kubernetes.io/aws-load-balancer-access-log-enabled" = "true"
-      #"service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval" = "60"
-      #"service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name" = "cc-terraform-state-dev"
-      #"service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix" = "lb-logs/dev"
     }
     labels = {
       "app.kubernetes.io/component" = "ambassador-service"
