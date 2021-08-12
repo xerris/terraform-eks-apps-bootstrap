@@ -21,6 +21,7 @@ module "ambassador_crd_install"{
 
 module "ambassador_install"{
   source = "./apps/ambassador"
+  service_values = var.ambassador_service_values
 }
 
 

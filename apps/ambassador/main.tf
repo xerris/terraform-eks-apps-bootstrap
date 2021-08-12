@@ -427,29 +427,28 @@ resource "kubernetes_manifest" "ambassador_devportal_api_map"{
 
 }
 
+
+
 resource "kubernetes_service" "ambassador_service"{
   depends_on = [kubernetes_namespace.ambassador]
+  for_each =  var.service_values
   metadata {
     annotations = {
-      #"a8r.io/bugs" = "https://github.com/datawire/ambassador/issues"
-      #"a8r.io/chat" = "http://a8r.io/Slack"
-      #"a8r.io/dependencies" = "ambassador-redis.ambassador"
-      #"a8r.io/description" = "The Ambassador Edge Stack goes beyond traditional API Gateways and Ingress Controllers with the advanced edge features needed to support developer self-service and full-cycle development."
-      #"a8r.io/documentation" = "https://www.getambassador.io/docs/edge-stack/latest/"
-      #"a8r.io/owner" = "Ambassador Labs"
-      #"a8r.io/repository" = "github.com/datawire/ambassador"
-      #"a8r.io/support" = "https://www.getambassador.io/about-us/support/"
-      "service.beta.kubernetes.io/aws-load-balancer-type" = "alb"
-      "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled" = "true"
+      "service.beta.kubernetes.io/aws-load-balancer-type" = each.value.lb_type
+      "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled" = true
+      "service.beta.kubernetes.io/aws-load-balancer-internal" = each.value.internal
       "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = "http"
-      "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags" = "stack=dev,service-name=ambassador"
+      "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags" = "stack=dev,service-name=${each.value.service_name}"
+      #include ssl
+      #service.beta.kubernetes.io/aws-load-balancer-ssl-cert: {{ACM_CERT_ARN}}
+      #service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
     }
-    name = "ambassador"
+    name = each.value.service_name
     namespace = "ambassador"
   }
   spec {
     selector = {
-      "service" = "ambassador"
+      "service" = each.value.service_name
     }
     port {
         name = "http"
