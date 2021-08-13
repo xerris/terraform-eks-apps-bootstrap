@@ -450,18 +450,16 @@ resource "kubernetes_service" "ambassador_service"{
     selector = {
       "service" = each.value.service_name
     }
-    port {
-        name = "http"
-        port = 80
-        protocol = "TCP"
-        target_port = 8080
+
+  dynamic "port"{
+    for_each = each.value.ports
+    content {
+        name = port.value.name
+        port = port.value.port
+        protocol = port.value.protocol
+        target_port = port.value.target_port
       }
-    port  {
-        name = "https"
-        port = 443
-        protocol = "TCP"
-        target_port = 8443
-      }
+  }
     type = "LoadBalancer"
   }
 }
