@@ -437,7 +437,7 @@ resource "kubernetes_service" "ambassador_service"{
       "service.beta.kubernetes.io/aws-load-balancer-type" = each.value.lb_type
       "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled" = true
       "service.beta.kubernetes.io/aws-load-balancer-internal" = each.value.internal
-      "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = "http"
+      "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = each.value.backend_protocol
       "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags" = "stack=dev,service-name=${each.value.service_name}"
       #include ssl
       #service.beta.kubernetes.io/aws-load-balancer-ssl-cert: {{ACM_CERT_ARN}}

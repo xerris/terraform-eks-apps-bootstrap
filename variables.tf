@@ -57,6 +57,7 @@ variable "ambassador_service_values"{
     service_name  = string
     lb_type = string
     internal   = bool
+    backend_protocol = string
     ports = map(object(
       {
         name = string
