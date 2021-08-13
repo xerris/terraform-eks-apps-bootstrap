@@ -44,5 +44,6 @@ ambassador_service_values = {
             protocol = "TCP"
             target_port = 8443
           }
+        }
     }
 }

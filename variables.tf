@@ -57,12 +57,14 @@ variable "ambassador_service_values"{
     service_name  = string
     lb_type = string
     internal   = bool
-    ports = map(object({
-          name = string
-          port = number
-          protocol = string
-          target_port = number
-        }))
+    ports = map(object(
+      {
+        name = string
+        port = number
+        protocol = string
+        target_port = number
+      }
+      ))
   }
   ))
 }
