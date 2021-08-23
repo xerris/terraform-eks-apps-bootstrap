@@ -5,6 +5,8 @@ variable "service_values"{
         lb_type = string
         internal   = bool
         backend_protocol = string
+        acm = string
+        ssl_port = number
         ports = map(object(
           {
             name = string

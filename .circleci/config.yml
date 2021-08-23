@@ -6,19 +6,23 @@ anchors:
         mkdir -p ~/.aws
         file=~/.aws/credentials
         echo "[default]" > $file
-        echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> $file
-        echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> $file
+        echo "aws_access_key_id = $AWS_ACCESS_KEY_ID_MASTER" >> $file
+        echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY_MASTER" >> $file
 
   deploy-infra: &deploy-infra
     run:
       name: Deploy Kuberntes Apps
       command: |
+        PATH="/home/circleci/.local/bin/:$PATH"
+        source $HOME/.profile
         bash ./terraform_exec.sh 1 $FLUX_TOKEN
 
   destroy-infra: &destroy-infra
     run:
       name: Destroy Kuberntes Apps
       command: |
+        PATH="/home/circleci/.local/bin/:$PATH"
+        source $HOME/.profile
         bash ./terraform_exec.sh 2 $FLUX_TOKEN
 
   install-dependencies: &install-dependencies
