@@ -439,8 +439,8 @@ resource "kubernetes_service" "ambassador_service"{
       "service.beta.kubernetes.io/aws-load-balancer-internal" = each.value.internal
       "service.beta.kubernetes.io/aws-load-balancer-backend-protocol" = each.value.backend_protocol
       "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags" = "stack=dev,service-name=${each.value.service_name}"
-      #"service.beta.kubernetes.io/aws-load-balancer-ssl-cert" = each.value.acm
-      #"service.beta.kubernetes.io/aws-load-balancer-ssl-ports" = each.value.ssl_port
+      "service.beta.kubernetes.io/aws-load-balancer-ssl-cert" = each.value.acm
+      "service.beta.kubernetes.io/aws-load-balancer-ssl-ports" = each.value.ssl_port
     }
     name = each.value.service_name
     namespace = "ambassador"
