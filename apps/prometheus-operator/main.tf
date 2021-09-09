@@ -73,11 +73,11 @@ resource "kubernetes_namespace" "custom-metrics" {
   }
 }
 
-resource "helm_release" "prometheus-adaptor" {
+resource "helm_release" "prometheus-adapter" {
   depends_on = [kubernetes_namespace.custom-metrics,helm_release.prometheus-operator ]
-  name = "prometheus-adaptor"
-  version   = "0.8.4"
-  chart      = "prometheus-adapter"
+  name = "prometheus-adapter"
+  version   = "0.9.0"
+  chart      = "prometheus-community/prometheus-adapter"
   repository = "https://prometheus-community.github.io/helm-charts/"
   namespace  = kubernetes_namespace.custom-metrics.metadata[0].name
   timeout    = 3600
