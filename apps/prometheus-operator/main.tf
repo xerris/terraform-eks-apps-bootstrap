@@ -50,7 +50,9 @@ resource "helm_release" "prometheus-operator" {
   namespace  = kubernetes_namespace.prometheus.metadata[0].name
   timeout    = 3600
   dependency_update = true
-  values = []
+  values = [
+    "${file("${path.module}/prometheus.yaml")}"
+  ]
   set {
     name  = "cluster.enabled"
     value = "true"
