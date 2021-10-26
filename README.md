@@ -1,6 +1,22 @@
 # Terraform-eks-apps-bootstrap
 ## Introduction
-This bootstrap creates flux and prometheus-operator
+This bootstrap creates Flux to keep your cluster in sync  with your Kurbernetes Cluster and a Prometheus-Operator for monitoring the clusters. The Prometheus-Operator ensures that a deployment matches the resource definition. 
+
+## Prerequisites 
+Terraform version 0.15.1
+The  .terraform-version or version.tf works with tfenv . It will install if needed and switch to the Terrraform version specified.
+# version.tf 
+```
+terraform {
+  required_version = ">= 0.15"
+}
+```
+# .terraform-version
+```
+terraform {
+  required_version = ">= 0.15"
+}
+```
 
 ## Environment Variables
 
@@ -11,8 +27,8 @@ The credentials requested belogs to the user `project-deploy-user`  created at t
 |AWS_ACCESS_KEY_ID| n/a | n/a |
 |AWS_SECRET_ACCESS_KEY| n/a | n/a |
 |AWS_REGION | ca-central-1| n/a |
-
-
+|ENV | <env> | n/a |
+|FLUX_TOKEN | <flux_token> | n/a |
 
 ## Requirements
 
@@ -64,7 +80,8 @@ No resources.
 export AWS_ACCESS_KEY_ID="XXXXXXXXXXXXXXXXXXXXXXXXXXX"
 export AWS_SECRET_ACCESS_KEY="YYYYYYYYYYYYYYYYYYYYYYYYY"
 export AWS_REGION=ca-central-1
-
+export ENV=<env>
+export FLUX_TOKEN=<flux_token>
 ```
 
 The `terraform_exec.sh` script receives one parameter that indicates the action to be executed.
@@ -79,17 +96,17 @@ The `terraform_exec.sh` script receives one parameter that indicates the action 
 * Execute a Terraform Plan on the project folder
 
 ```
-terraform_exec.sh 0
+bash ./terraform_exec.sh 0 
 ```
 
 * Execute a Terraform apply on the project folder
 
 ```
-terraform_exec.sh 1
+bash ./terraform_exec.sh 1 $FLUX_TOKEN
 ```
 
 * Execute a Terraform Destroy on the project folder
 
 ```
-terraform_exec.sh 2
+bash ./terraform_exec.sh 2 $FLUX_TOKEN
 ```
